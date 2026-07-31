@@ -1,0 +1,449 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum AppStatus {
+  ACTIVE
+  DISABLED
+}
+
+enum CredentialKind {
+  SDK_EXCHANGE
+}
+
+enum IdentityType {
+  APP_SSO
+  EMAIL
+  WECHAT_OPEN
+  WECHAT_OA
+  GUEST
+}
+
+enum ConversationChannel {
+  WEB
+  FLUTTER
+}
+
+enum ConversationStatus {
+  OPEN
+  RESOLVED
+  UNRESOLVED
+  CLOSED
+}
+
+enum MessageRole {
+  USER
+  ASSISTANT
+  SYSTEM
+}
+
+enum MessageStatus {
+  PENDING
+  STREAMING
+  COMPLETED
+  FAILED
+}
+
+enum KnowledgeSourceType {
+  FAQ
+  PDF
+  URL
+}
+
+enum IngestionStatus {
+  PENDING
+  PROCESSING
+  READY
+  FAILED
+}
+
+enum FeedbackKind {
+  BUG
+  FEATURE_REQUEST
+  COMPLAINT
+  PRAISE
+  QUESTION
+  OTHER
+}
+
+enum FeedbackStatus {
+  NEW
+  REVIEWED
+  LINKED
+  ARCHIVED
+}
+
+enum RequirementStatus {
+  DRAFT
+  APPROVED
+  PLANNED
+  IN_PROGRESS
+  DONE
+  REJECTED
+}
+
+enum RequirementSource {
+  AI
+  MANUAL
+}
+
+enum UnresolvedStatus {
+  OPEN
+  PROCESSING
+  RESOLVED
+  DISMISSED
+}
+
+enum ReportStatus {
+  PENDING
+  GENERATING
+  READY
+  FAILED
+}
+
+model App {
+  id                   String            @id @default(uuid()) @db.Uuid
+  slug                 String            @unique @db.VarChar(80)
+  name                 String            @db.VarChar(120)
+  status               AppStatus         @default(ACTIVE)
+  primaryColor         String            @default("#0F766E") @db.VarChar(32)
+  welcomeMessageZh     String            @default("你好，我会尽力解答问题，也会认真记录你的反馈。")
+  welcomeMessageEn     String            @default("Hi, I can answer product questions and carefully capture your feedback.")
+  suggestedQuestionsZh Json              @default("[]")
+  suggestedQuestionsEn Json              @default("[]")
+  publicWidgetEnabled  Boolean           @default(true)
+  createdAt            DateTime          @default(now())
+  updatedAt            DateTime          @updatedAt
+  credentials          AppCredential[]
+  authConfig           AppAuthConfig?
+  modelConfig          AppModelConfig?
+  identities           UserIdentity[]
+  conversations        Conversation[]
+  knowledgeSources     KnowledgeSource[]
+  knowledgeChunks      KnowledgeChunk[]
+  feedbackItems        FeedbackItem[]
+  requirements         Requirement[]
+  reports              Report[]
+  usageRecords         UsageRecord[]
+  auditLogs            AuditLog[]
+}
+
+model AppCredential {
+  id         String         @id @default(uuid()) @db.Uuid
+  appId      String         @db.Uuid
+  kind       CredentialKind @default(SDK_EXCHANGE)
+  name       String         @db.VarChar(120)
+  keyId      String         @unique @db.VarChar(80)
+  secretHash String
+  lastUsedAt DateTime?
+  expiresAt  DateTime?
+  revokedAt  DateTime?
+  createdAt  DateTime       @default(now())
+  app        App            @relation(fields: [appId], references: [id], onDelete: Cascade)
+
+  @@index([appId, kind])
+}
+
+model AppAuthConfig {
+  id           String  @id @default(uuid()) @db.Uuid
+  appId        String  @unique @db.Uuid
+  allowGuest   Boolean @default(true)
+  allowEmail   Boolean @default(false)
+  allowWechat  Boolean @default(false)
+  wechatAppId  String? @db.VarChar(120)
+  wechatSecret String?
+  wechatMode   String? @db.VarChar(40)
+  app          App     @relation(fields: [appId], references: [id], onDelete: Cascade)
+}
+
+model AppModelConfig {
+  id                  String   @id @default(uuid()) @db.Uuid
+  appId               String   @unique @db.Uuid
+  provider            String   @default("deepseek") @db.VarChar(80)
+  baseUrl             String?
+  model               String   @default("deepseek-chat") @db.VarChar(120)
+  apiKeyEncrypted     String?
+  temperature         Float    @default(0.2)
+  confidenceThreshold Float    @default(0.72)
+  enabled             Boolean  @default(true)
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+  app                 App      @relation(fields: [appId], references: [id], onDelete: Cascade)
+}
+
+model AdminUser {
+  id           String        @id @default(uuid()) @db.Uuid
+  email        String        @unique @db.VarChar(320)
+  name         String        @db.VarChar(120)
+  passwordHash String
+  enabled      Boolean       @default(true)
+  lastLoginAt  DateTime?
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  sessions     AuthSession[]
+  auditLogs    AuditLog[]
+}
+
+model EndUser {
+  id            String         @id @default(uuid()) @db.Uuid
+  displayName   String?        @db.VarChar(120)
+  avatarUrl     String?
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+  identities    UserIdentity[]
+  sessions      AuthSession[]
+  conversations Conversation[]
+  feedbackItems FeedbackItem[]
+}
+
+model UserIdentity {
+  id            String       @id @default(uuid()) @db.Uuid
+  endUserId     String       @db.Uuid
+  appId         String       @db.Uuid
+  type          IdentityType
+  issuer        String       @default("feedback-agent") @db.VarChar(120)
+  subject       String       @db.VarChar(320)
+  email         String?      @db.VarChar(320)
+  emailVerified Boolean      @default(false)
+  metadata      Json         @default("{}")
+  lastSeenAt    DateTime     @default(now())
+  createdAt     DateTime     @default(now())
+  endUser       EndUser      @relation(fields: [endUserId], references: [id], onDelete: Cascade)
+  app           App          @relation(fields: [appId], references: [id], onDelete: Cascade)
+
+  @@unique([appId, type, issuer, subject])
+  @@index([endUserId])
+  @@index([email])
+}
+
+model AuthSession {
+  id          String     @id @default(uuid()) @db.Uuid
+  endUserId   String?    @db.Uuid
+  adminUserId String?    @db.Uuid
+  appId       String?    @db.Uuid
+  tokenHash   String     @unique
+  expiresAt   DateTime
+  revokedAt   DateTime?
+  createdAt   DateTime   @default(now())
+  endUser     EndUser?   @relation(fields: [endUserId], references: [id], onDelete: Cascade)
+  adminUser   AdminUser? @relation(fields: [adminUserId], references: [id], onDelete: Cascade)
+
+  @@index([endUserId, expiresAt])
+  @@index([adminUserId, expiresAt])
+}
+
+model Conversation {
+  id             String              @id @default(uuid()) @db.Uuid
+  appId          String              @db.Uuid
+  endUserId      String              @db.Uuid
+  channel        ConversationChannel
+  locale         String              @default("zh-CN") @db.VarChar(12)
+  status         ConversationStatus  @default(OPEN)
+  subject        String?             @db.VarChar(240)
+  summary        String?
+  resolutionNote String?
+  metadata       Json                @default("{}")
+  aiConfidence   Float?
+  lastMessageAt  DateTime            @default(now())
+  finalizedAt    DateTime?
+  createdAt      DateTime            @default(now())
+  updatedAt      DateTime            @updatedAt
+  app            App                 @relation(fields: [appId], references: [id], onDelete: Cascade)
+  endUser        EndUser             @relation(fields: [endUserId], references: [id], onDelete: Cascade)
+  messages       Message[]
+  feedbackItems  FeedbackItem[]
+  unresolvedCase UnresolvedCase?
+
+  @@index([appId, status, lastMessageAt(sort: Desc)])
+  @@index([endUserId, lastMessageAt(sort: Desc)])
+}
+
+model Message {
+  id               String         @id @default(uuid()) @db.Uuid
+  conversationId   String         @db.Uuid
+  clientMessageId  String?        @db.VarChar(100)
+  role             MessageRole
+  status           MessageStatus  @default(COMPLETED)
+  content          String
+  intent           String?        @db.VarChar(80)
+  citations        Json           @default("[]")
+  model            String?        @db.VarChar(120)
+  promptTokens     Int?
+  completionTokens Int?
+  errorCode        String?        @db.VarChar(120)
+  createdAt        DateTime       @default(now())
+  conversation     Conversation   @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+  feedbackItems    FeedbackItem[]
+
+  @@unique([conversationId, clientMessageId])
+  @@index([conversationId, createdAt])
+}
+
+model KnowledgeSource {
+  id          String              @id @default(uuid()) @db.Uuid
+  appId       String              @db.Uuid
+  type        KnowledgeSourceType
+  status      IngestionStatus     @default(PENDING)
+  title       String              @db.VarChar(240)
+  sourceUrl   String?
+  objectKey   String?
+  mimeType    String?             @db.VarChar(120)
+  sizeBytes   Int?
+  faqQuestion String?
+  faqAnswer   String?
+  error       String?
+  metadata    Json                @default("{}")
+  createdAt   DateTime            @default(now())
+  updatedAt   DateTime            @updatedAt
+  app         App                 @relation(fields: [appId], references: [id], onDelete: Cascade)
+  chunks      KnowledgeChunk[]
+
+  @@index([appId, status, updatedAt(sort: Desc)])
+}
+
+model KnowledgeChunk {
+  id         String                 @id @default(uuid()) @db.Uuid
+  appId      String                 @db.Uuid
+  sourceId   String                 @db.Uuid
+  ordinal    Int
+  title      String                 @db.VarChar(240)
+  content    String
+  tokenCount Int?
+  embedding  Unsupported("vector")?
+  metadata   Json                   @default("{}")
+  createdAt  DateTime               @default(now())
+  app        App                    @relation(fields: [appId], references: [id], onDelete: Cascade)
+  source     KnowledgeSource        @relation(fields: [sourceId], references: [id], onDelete: Cascade)
+
+  @@unique([sourceId, ordinal])
+  @@index([appId, createdAt])
+}
+
+model FeedbackItem {
+  id             String                @id @default(uuid()) @db.Uuid
+  appId          String                @db.Uuid
+  conversationId String                @db.Uuid
+  messageId      String?               @db.Uuid
+  endUserId      String                @db.Uuid
+  kind           FeedbackKind
+  status         FeedbackStatus        @default(NEW)
+  title          String                @db.VarChar(240)
+  description    String
+  painPoint      String?
+  severity       Int                   @default(2)
+  sentiment      Float?
+  aiConfidence   Float?
+  evidence       Json                  @default("[]")
+  createdAt      DateTime              @default(now())
+  updatedAt      DateTime              @updatedAt
+  app            App                   @relation(fields: [appId], references: [id], onDelete: Cascade)
+  conversation   Conversation          @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+  message        Message?              @relation(fields: [messageId], references: [id], onDelete: SetNull)
+  endUser        EndUser               @relation(fields: [endUserId], references: [id], onDelete: Cascade)
+  requirements   RequirementFeedback[]
+
+  @@index([appId, status, createdAt(sort: Desc)])
+  @@index([conversationId])
+}
+
+model Requirement {
+  id               String                @id @default(uuid()) @db.Uuid
+  appId            String                @db.Uuid
+  title            String                @db.VarChar(240)
+  summary          String
+  painPoint        String
+  proposedSolution String?
+  category         String?               @db.VarChar(120)
+  priority         Int                   @default(2)
+  impactScore      Float?
+  frequency        Int                   @default(1)
+  status           RequirementStatus     @default(DRAFT)
+  source           RequirementSource     @default(AI)
+  aiConfidence     Float?
+  reviewedAt       DateTime?
+  createdAt        DateTime              @default(now())
+  updatedAt        DateTime              @updatedAt
+  app              App                   @relation(fields: [appId], references: [id], onDelete: Cascade)
+  feedbackItems    RequirementFeedback[]
+
+  @@index([appId, status, priority, updatedAt(sort: Desc)])
+}
+
+model RequirementFeedback {
+  requirementId String       @db.Uuid
+  feedbackId    String       @db.Uuid
+  createdAt     DateTime     @default(now())
+  requirement   Requirement  @relation(fields: [requirementId], references: [id], onDelete: Cascade)
+  feedback      FeedbackItem @relation(fields: [feedbackId], references: [id], onDelete: Cascade)
+
+  @@id([requirementId, feedbackId])
+}
+
+model UnresolvedCase {
+  id             String           @id @default(uuid()) @db.Uuid
+  conversationId String           @unique @db.Uuid
+  reason         String
+  priority       Int              @default(2)
+  status         UnresolvedStatus @default(OPEN)
+  resolution     String?
+  resolvedAt     DateTime?
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @updatedAt
+  conversation   Conversation     @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+
+  @@index([status, priority, createdAt])
+}
+
+model Report {
+  id          String       @id @default(uuid()) @db.Uuid
+  appId       String?      @db.Uuid
+  name        String       @db.VarChar(240)
+  status      ReportStatus @default(PENDING)
+  rangeStart  DateTime
+  rangeEnd    DateTime
+  metrics     Json         @default("{}")
+  markdown    String?
+  error       String?
+  createdAt   DateTime     @default(now())
+  completedAt DateTime?
+  app         App?         @relation(fields: [appId], references: [id], onDelete: Cascade)
+
+  @@index([appId, createdAt(sort: Desc)])
+}
+
+model UsageRecord {
+  id               String   @id @default(uuid()) @db.Uuid
+  appId            String   @db.Uuid
+  conversationId   String?  @db.Uuid
+  provider         String   @db.VarChar(80)
+  model            String   @db.VarChar(120)
+  promptTokens     Int      @default(0)
+  completionTokens Int      @default(0)
+  estimatedCost    Decimal? @db.Decimal(18, 8)
+  latencyMs        Int?
+  createdAt        DateTime @default(now())
+  app              App      @relation(fields: [appId], references: [id], onDelete: Cascade)
+
+  @@index([appId, createdAt])
+}
+
+model AuditLog {
+  id          String     @id @default(uuid()) @db.Uuid
+  appId       String?    @db.Uuid
+  adminUserId String?    @db.Uuid
+  action      String     @db.VarChar(120)
+  entityType  String     @db.VarChar(120)
+  entityId    String?    @db.VarChar(120)
+  metadata    Json       @default("{}")
+  createdAt   DateTime   @default(now())
+  app         App?       @relation(fields: [appId], references: [id], onDelete: SetNull)
+  adminUser   AdminUser? @relation(fields: [adminUserId], references: [id], onDelete: SetNull)
+
+  @@index([appId, createdAt(sort: Desc)])
+  @@index([adminUserId, createdAt(sort: Desc)])
+}

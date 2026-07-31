@@ -1,0 +1,33 @@
+{
+  "name": "@feedback-agent/database",
+  "version": "0.1.0",
+  "private": true,
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": ["dist", "prisma"],
+  "scripts": {
+    "build": "pnpm generate && tsc -p tsconfig.build.json",
+    "generate": "prisma generate",
+    "migrate:dev": "prisma migrate dev",
+    "migrate:deploy": "prisma migrate deploy",
+    "seed": "tsx prisma/seed.ts",
+    "studio": "prisma studio",
+    "typecheck": "tsc --noEmit",
+    "lint:check": "eslint \"{src,prisma}/**/*.ts\" --max-warnings 0",
+    "format:check": "prettier --check \"{src,prisma}/**/*.ts\" \"prisma/schema.prisma\"",
+    "test": "node --test"
+  },
+  "dependencies": {
+    "@prisma/client": "^6.19.0",
+    "argon2": "^0.44.0"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "eslint": "^9.0.0",
+    "prettier": "^3.0.0",
+    "prisma": "^6.19.0",
+    "tsx": "^4.20.0",
+    "typescript": "^5.9.0",
+    "typescript-eslint": "^8.0.0"
+  }
+}

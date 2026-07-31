@@ -1,0 +1,35 @@
+{
+  "name": "@feedback-agent/web",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint --fix",
+    "lint:check": "eslint --max-warnings 0",
+    "typecheck": "tsc --noEmit",
+    "format:check": "prettier --check \"src/**/*.{ts,tsx,css,md}\""
+  },
+  "dependencies": {
+    "@feedback-agent/contracts": "workspace:*",
+    "clsx": "^2.1.1",
+    "lucide-react": "^1.28.0",
+    "next": "16.2.12",
+    "react": "19.2.4",
+    "react-dom": "19.2.4",
+    "tailwind-merge": "^3.6.0",
+    "zod": "^4.4.3"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^9",
+    "eslint-config-next": "16.2.12",
+    "prettier": "^3.9.6",
+    "tailwindcss": "^4",
+    "typescript": "^5"
+  }
+}

@@ -1,0 +1,34 @@
+.DS_Store
+.env
+.env.*
+!.env.example
+node_modules/
+.pnpm-store/
+dist/
+coverage/
+.next/
+.turbo/
+*.log
+
+# IDE
+.idea/
+.vscode/
+
+# Flutter / Dart
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.packages
+build/
+ios/Pods/
+ios/.symlinks/
+macos/Pods/
+
+# Local runtime data
+.local/
+infra/data/
+
+# Generated API clients
+packages/contracts/generated/
+packages/flutter_sdk/lib/src/generated/
+packages/flutter_sdk/pubspec.lock
