@@ -1,23 +1,24 @@
 const { VITE_HIDE_HOME } = import.meta.env;
 const Layout = () => import("@/layout/index.vue");
+import LayoutDashboard from "~icons/lucide/layout-dashboard";
 
 export default {
   path: "/",
   name: "Home",
   component: Layout,
-  redirect: "/welcome",
+  redirect: "/dashboard",
   meta: {
-    icon: "ep/home-filled",
-    title: "首页",
+    icon: LayoutDashboard,
+    title: "工作台",
     rank: 0
   },
   children: [
     {
-      path: "/welcome",
-      name: "Welcome",
-      component: () => import("@/views/welcome/index.vue"),
+      path: "/dashboard",
+      name: "Dashboard",
+      component: () => import("@/views/dashboard/index.vue"),
       meta: {
-        title: "首页",
+        title: "工作台",
         showLink: VITE_HIDE_HOME === "true" ? false : true
       }
     }

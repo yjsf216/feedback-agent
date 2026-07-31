@@ -6,6 +6,21 @@
 
 /* 自定义全局 CssVar */
 :root {
+  --fa-background: oklch(0.975 0.008 175);
+  --fa-foreground: oklch(0.235 0.028 210);
+  --fa-card: oklch(0.995 0.003 175);
+  --fa-primary: oklch(0.48 0.105 177);
+  --fa-primary-strong: oklch(0.39 0.09 177);
+  --fa-accent: oklch(0.8 0.15 82);
+  --fa-danger: oklch(0.57 0.19 28);
+  --fa-warning: oklch(0.68 0.15 70);
+  --fa-success: oklch(0.58 0.12 155);
+  --fa-muted: oklch(0.95 0.012 180);
+  --fa-muted-foreground: oklch(0.53 0.025 210);
+  --fa-border: oklch(0.89 0.014 185);
+  --fa-ring: oklch(0.58 0.12 177 / 35%);
+  --fa-shadow: 0 18px 50px oklch(0.24 0.04 190 / 8%);
+
   /* 左侧菜单展开、收起动画时长 */
   --pure-transition-duration: 0.3s;
 
@@ -24,6 +39,183 @@
   --pure-theme-sidebar-logo: none;
   --pure-theme-menu-title-hover: initial;
   --pure-theme-menu-active-before: transparent;
+}
+
+html,
+body,
+#app {
+  min-height: 100%;
+  color: var(--fa-foreground);
+  font-family: "Manrope Variable", "Noto Sans SC Variable", sans-serif;
+  background: var(--fa-background);
+}
+
+body {
+  letter-spacing: -0.008em;
+}
+
+.navbar,
+.sidebar-logo-container,
+.el-menu {
+  font-family: "Manrope Variable", "Noto Sans SC Variable", sans-serif;
+}
+
+.fa-page {
+  min-height: calc(100vh - 112px);
+  padding: 26px;
+  background:
+    radial-gradient(circle at 96% 2%, oklch(0.86 0.08 174 / 20%), transparent 27rem),
+    var(--fa-background);
+}
+
+.fa-page-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 22px;
+}
+
+.fa-eyebrow {
+  margin: 0 0 7px;
+  color: var(--fa-primary);
+  font-size: 12px;
+  font-weight: 750;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.fa-page-title {
+  margin: 0;
+  font-size: clamp(25px, 3vw, 38px);
+  font-weight: 760;
+  letter-spacing: -0.045em;
+  line-height: 1.08;
+}
+
+.fa-page-description {
+  max-width: 700px;
+  margin: 9px 0 0;
+  color: var(--fa-muted-foreground);
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+.fa-card {
+  background: color-mix(in oklch, var(--fa-card) 94%, transparent);
+  border: 1px solid var(--fa-border);
+  border-radius: 18px;
+  box-shadow: 0 1px 0 oklch(1 0 0 / 70%);
+}
+
+.fa-panel {
+  padding: 20px;
+}
+
+.fa-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+  padding: 14px;
+}
+
+.fa-empty {
+  display: grid;
+  min-height: 260px;
+  place-items: center;
+  padding: 36px;
+  color: var(--fa-muted-foreground);
+  text-align: center;
+}
+
+.fa-empty strong {
+  display: block;
+  margin-bottom: 6px;
+  color: var(--fa-foreground);
+  font-size: 17px;
+}
+
+.fa-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 26px;
+  padding: 3px 9px;
+  color: var(--fa-muted-foreground);
+  font-size: 12px;
+  font-weight: 650;
+  background: var(--fa-muted);
+  border-radius: 999px;
+}
+
+.fa-status::before {
+  width: 6px;
+  height: 6px;
+  background: currentColor;
+  border-radius: 999px;
+  content: "";
+}
+
+.fa-status--success {
+  color: var(--fa-success);
+  background: oklch(0.94 0.035 155);
+}
+
+.fa-status--warning {
+  color: oklch(0.55 0.13 70);
+  background: oklch(0.95 0.045 80);
+}
+
+.fa-status--danger {
+  color: var(--fa-danger);
+  background: oklch(0.95 0.035 28);
+}
+
+.fa-status--primary {
+  color: var(--fa-primary);
+  background: oklch(0.94 0.035 177);
+}
+
+.el-button--primary {
+  --el-button-bg-color: var(--fa-primary);
+  --el-button-border-color: var(--fa-primary);
+  --el-button-hover-bg-color: var(--fa-primary-strong);
+  --el-button-hover-border-color: var(--fa-primary-strong);
+  --el-button-active-bg-color: var(--fa-primary-strong);
+}
+
+.el-dialog,
+.el-drawer {
+  --el-dialog-border-radius: 18px;
+}
+
+.el-table {
+  --el-table-header-bg-color: var(--fa-muted);
+  --el-table-border-color: var(--fa-border);
+  --el-table-row-hover-bg-color: oklch(0.96 0.018 175);
+  color: var(--fa-foreground);
+  border-radius: 14px;
+}
+
+@media (width <= 720px) {
+  .fa-page {
+    padding: 18px 14px 88px;
+  }
+
+  .fa-page-header {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .fa-page-header .el-button {
+    width: 100%;
+  }
+
+  .fa-toolbar > * {
+    width: 100% !important;
+  }
 }
 
 /* 灰色模式 */

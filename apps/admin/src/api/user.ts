@@ -22,6 +22,16 @@ export type UserResult = {
   };
 };
 
+type AuthResponse = {
+  accessToken: string;
+  refreshToken: string;
+  expiresIn: number;
+  user: {
+    id: string;
+    displayName: string | null;
+  };
+};
+
 export type RefreshTokenResult = {
   success: boolean;
   data: {
@@ -36,10 +46,33 @@ export type RefreshTokenResult = {
 
 /** 登录 */
 export const getLogin = (data?: object) => {
-  return http.request<UserResult>("post", "/login", { data });
+  return http
+    .request<AuthResponse>("post", "/v1/admin/auth/login", { data })
+    .then(result => ({
+      success: true,
+      data: {
+        accessToken: result.accessToken,
+        refreshToken: result.refreshToken,
+        expires: new Date(Date.now() + result.expiresIn * 1000),
+        avatar: "",
+        username: result.user.displayName ?? "管理员",
+        nickname: result.user.displayName ?? "管理员",
+        roles: ["admin"],
+        permissions: ["*:*:*"]
+      }
+    }));
 };
 
 /** 刷新`token` */
 export const refreshTokenApi = (data?: object) => {
-  return http.request<RefreshTokenResult>("post", "/refresh-token", { data });
+  return http
+    .request<AuthResponse>("post", "/v1/admin/auth/refresh", { data })
+    .then(result => ({
+      success: true,
+      data: {
+        accessToken: result.accessToken,
+        refreshToken: result.refreshToken,
+        expires: new Date(Date.now() + result.expiresIn * 1000)
+      }
+    }));
 };

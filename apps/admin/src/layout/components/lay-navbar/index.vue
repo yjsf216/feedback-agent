@@ -6,6 +6,7 @@ import LayNavMix from "../lay-sidebar/NavMix.vue";
 import LaySidebarFullScreen from "../lay-sidebar/components/SidebarFullScreen.vue";
 import LaySidebarBreadCrumb from "../lay-sidebar/components/SidebarBreadCrumb.vue";
 import LaySidebarTopCollapse from "../lay-sidebar/components/SidebarTopCollapse.vue";
+import AppScopeSelector from "@/components/AppScopeSelector/index.vue";
 
 import LogoutCircleRLine from "~icons/ri/logout-circle-r-line";
 import Setting from "~icons/ri/settings-3-line";
@@ -40,6 +41,7 @@ const {
     <LayNavMix v-if="layout === 'mix'" />
 
     <div v-if="layout === 'vertical'" class="vertical-header-right">
+      <AppScopeSelector />
       <!-- 菜单搜索 -->
       <LaySearch id="header-search" />
       <!-- 全屏 -->
@@ -94,7 +96,7 @@ const {
     justify-content: flex-end;
     min-width: 280px;
     height: 48px;
-    color: #000000d9;
+    color: var(--fa-foreground);
 
     .el-dropdown-link {
       display: flex;
@@ -102,7 +104,7 @@ const {
       justify-content: space-around;
       height: 48px;
       padding: 10px;
-      color: #000000d9;
+      color: var(--fa-foreground);
       cursor: pointer;
 
       p {
@@ -130,6 +132,26 @@ const {
     display: inline-flex;
     flex-wrap: wrap;
     min-width: 100%;
+  }
+}
+
+@media (width <= 720px) {
+  .navbar {
+    .vertical-header-right {
+      min-width: 0;
+
+      .el-dropdown-link {
+        padding-inline: 7px;
+
+        p {
+          display: none;
+        }
+      }
+    }
+
+    :deep(#full-screen) {
+      display: none;
+    }
   }
 }
 </style>
