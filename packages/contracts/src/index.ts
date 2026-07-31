@@ -46,6 +46,7 @@ export type RequirementStatus = z.infer<typeof requirementStatusSchema>;
 
 export const exchangeTokenRequestSchema = z.object({
   appId: z.string().uuid(),
+  keyId: z.string().min(8).max(80),
   externalUserId: z.string().min(1).max(200),
   displayName: z.string().trim().min(1).max(120).optional(),
   email: z.string().email().optional(),
@@ -60,6 +61,21 @@ export const createGuestRequestSchema = z.object({
   guestId: z.string().min(8).max(200),
 });
 export type CreateGuestRequest = z.infer<typeof createGuestRequestSchema>;
+
+export const emailRegisterRequestSchema = z.object({
+  appId: z.string().uuid(),
+  email: z.string().email(),
+  password: z.string().min(8).max(128),
+  displayName: z.string().trim().min(1).max(120).optional(),
+});
+export type EmailRegisterRequest = z.infer<typeof emailRegisterRequestSchema>;
+
+export const emailLoginRequestSchema = z.object({
+  appId: z.string().uuid(),
+  email: z.string().email(),
+  password: z.string().min(8).max(128),
+});
+export type EmailLoginRequest = z.infer<typeof emailLoginRequestSchema>;
 
 export const createConversationRequestSchema = z.object({
   appId: z.string().uuid(),
@@ -112,7 +128,11 @@ export const streamEventSchema = z.discriminatedUnion("type", [
   }),
   baseStreamEventSchema.extend({
     type: z.literal("knowledge.source"),
-    source: z.object({ id: z.string(), title: z.string(), url: z.string().optional() }),
+    source: z.object({
+      id: z.string(),
+      title: z.string(),
+      url: z.string().optional(),
+    }),
   }),
   baseStreamEventSchema.extend({
     type: z.literal("conversation.state"),
@@ -146,3 +166,19 @@ export interface CursorPage<T> {
   items: T[];
   nextCursor: string | null;
 }
+
+export const createFaqRequestSchema = z.object({
+  appId: z.string().uuid(),
+  question: z.string().trim().min(2).max(500),
+  answer: z.string().trim().min(2).max(12000),
+});
+export type CreateFaqRequest = z.infer<typeof createFaqRequestSchema>;
+
+export const createUrlSourceRequestSchema = z.object({
+  appId: z.string().uuid(),
+  url: z.string().url(),
+  title: z.string().trim().min(1).max(240).optional(),
+});
+export type CreateUrlSourceRequest = z.infer<
+  typeof createUrlSourceRequestSchema
+>;

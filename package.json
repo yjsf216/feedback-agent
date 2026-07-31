@@ -9,10 +9,10 @@
     "pnpm": ">=11"
   },
   "scripts": {
-    "dev": "pnpm build:packages && pnpm --parallel --filter './apps/*' dev",
+    "dev": "pnpm build:packages && dotenv -e .env -- pnpm --parallel --filter './apps/*' dev",
     "build:packages": "pnpm --filter './packages/*' build",
-    "dev:api": "pnpm --filter @feedback-agent/api dev",
-    "dev:worker": "pnpm --filter @feedback-agent/worker dev",
+    "dev:api": "dotenv -e .env -- pnpm --filter @feedback-agent/api dev",
+    "dev:worker": "dotenv -e .env -- pnpm --filter @feedback-agent/worker dev",
     "dev:web": "pnpm --filter @feedback-agent/web dev",
     "dev:admin": "pnpm --filter @feedback-agent/admin dev",
     "build": "pnpm -r --if-present build",
@@ -24,10 +24,13 @@
     "infra:down": "docker compose -f infra/docker-compose.yml down",
     "infra:logs": "docker compose -f infra/docker-compose.yml logs -f",
     "db:generate": "pnpm --filter @feedback-agent/database generate",
-    "db:migrate": "pnpm --filter @feedback-agent/database migrate:dev",
-    "db:seed": "pnpm --filter @feedback-agent/database seed",
-    "db:studio": "pnpm --filter @feedback-agent/database studio",
+    "db:migrate": "dotenv -e .env -- pnpm --filter @feedback-agent/database migrate:dev",
+    "db:seed": "dotenv -e .env -- pnpm --filter @feedback-agent/database seed",
+    "db:studio": "dotenv -e .env -- pnpm --filter @feedback-agent/database studio",
     "sdk:analyze": "cd packages/flutter_sdk && fvm flutter analyze",
     "sdk:test": "cd packages/flutter_sdk && fvm flutter test"
+  },
+  "devDependencies": {
+    "dotenv-cli": "^11.0.0"
   }
 }

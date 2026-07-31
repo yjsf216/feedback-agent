@@ -134,17 +134,18 @@ model App {
 }
 
 model AppCredential {
-  id         String         @id @default(uuid()) @db.Uuid
-  appId      String         @db.Uuid
-  kind       CredentialKind @default(SDK_EXCHANGE)
-  name       String         @db.VarChar(120)
-  keyId      String         @unique @db.VarChar(80)
-  secretHash String
-  lastUsedAt DateTime?
-  expiresAt  DateTime?
-  revokedAt  DateTime?
-  createdAt  DateTime       @default(now())
-  app        App            @relation(fields: [appId], references: [id], onDelete: Cascade)
+  id              String         @id @default(uuid()) @db.Uuid
+  appId           String         @db.Uuid
+  kind            CredentialKind @default(SDK_EXCHANGE)
+  name            String         @db.VarChar(120)
+  keyId           String         @unique @db.VarChar(80)
+  secretHash      String
+  secretEncrypted String
+  lastUsedAt      DateTime?
+  expiresAt       DateTime?
+  revokedAt       DateTime?
+  createdAt       DateTime       @default(now())
+  app             App            @relation(fields: [appId], references: [id], onDelete: Cascade)
 
   @@index([appId, kind])
 }
@@ -209,6 +210,7 @@ model UserIdentity {
   issuer        String       @default("feedback-agent") @db.VarChar(120)
   subject       String       @db.VarChar(320)
   email         String?      @db.VarChar(320)
+  passwordHash  String?
   emailVerified Boolean      @default(false)
   metadata      Json         @default("{}")
   lastSeenAt    DateTime     @default(now())

@@ -12,6 +12,7 @@ export interface AgentInput {
   conversationId: string;
   locale: "zh-CN" | "en";
   message: string;
+  history?: Array<{ role: "USER" | "ASSISTANT"; content: string }>;
 }
 
 export interface AgentOutput {

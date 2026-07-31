@@ -24,7 +24,10 @@ async function main() {
       authConfig: { create: { allowGuest: true, allowEmail: false } },
       modelConfig: { create: {} },
       suggestedQuestionsZh: ["如何提交产品建议？", "我的问题没有解决怎么办？"],
-      suggestedQuestionsEn: ["How do I submit product feedback?", "What if my issue is unresolved?"],
+      suggestedQuestionsEn: [
+        "How do I submit product feedback?",
+        "What if my issue is unresolved?",
+      ],
     },
     update: {},
   });
