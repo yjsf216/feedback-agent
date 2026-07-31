@@ -104,8 +104,14 @@ export const publicAppConfigSchema = z.object({
   slug: z.string(),
   name: z.string(),
   primaryColor: z.string(),
-  welcomeMessage: z.string(),
-  suggestedQuestions: z.array(z.string()),
+  welcomeMessages: z.object({
+    "zh-CN": z.string(),
+    en: z.string(),
+  }),
+  suggestedQuestions: z.object({
+    "zh-CN": z.array(z.string()),
+    en: z.array(z.string()),
+  }),
   auth: z.object({
     guest: z.boolean(),
     email: z.boolean(),

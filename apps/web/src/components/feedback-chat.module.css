@@ -1,0 +1,957 @@
+.feedbackPage {
+  --brand-color: var(--app-primary, #0f766e);
+  min-height: 100vh;
+  color: var(--foreground);
+  background:
+    radial-gradient(
+      circle at 5% 100%,
+      color-mix(in oklch, var(--brand-color) 16%, transparent),
+      transparent 28rem
+    ),
+    var(--background);
+}
+.topbar {
+  position: sticky;
+  z-index: 20;
+  top: 0;
+  display: flex;
+  height: 74px;
+  padding: 0 32px;
+  align-items: center;
+  justify-content: space-between;
+  background: color-mix(in oklch, var(--card) 88%, transparent);
+  border-bottom: 1px solid var(--border);
+  backdrop-filter: blur(18px);
+}
+.appBrand {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  gap: 11px;
+}
+.appLogo {
+  display: grid;
+  width: 40px;
+  height: 40px;
+  flex: none;
+  color: oklch(0.99 0.002 175);
+  background: var(--brand-color);
+  border-radius: 13px;
+  place-items: center;
+  box-shadow: 0 9px 22px
+    color-mix(in oklch, var(--brand-color) 22%, transparent);
+}
+.appLogo svg {
+  width: 20px;
+}
+.appBrand > span:last-child {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+}
+.appBrand strong {
+  overflow: hidden;
+  font-family: "Syne Variable", "Noto Sans SC Variable", sans-serif;
+  font-size: 14px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.appBrand small {
+  display: flex;
+  align-items: center;
+  color: var(--muted-foreground);
+  font-size: 9px;
+  gap: 5px;
+}
+.appBrand small i {
+  width: 6px;
+  height: 6px;
+  background: var(--success);
+  border-radius: 50%;
+}
+.topbarActions {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+.localeSwitch,
+.identityButton,
+.newChatButton {
+  display: flex;
+  min-height: 37px;
+  align-items: center;
+  background: var(--muted);
+  border-radius: 10px;
+}
+.localeSwitch {
+  padding: 3px 5px 3px 9px;
+  gap: 3px;
+}
+.localeSwitch > svg {
+  width: 14px;
+  margin-right: 3px;
+  color: var(--muted-foreground);
+}
+.localeSwitch button {
+  width: 30px;
+  height: 28px;
+  cursor: pointer;
+  font-size: 9px;
+  background: transparent;
+  border-radius: 7px;
+}
+.localeSwitch .activeLocale {
+  color: var(--brand-color);
+  background: var(--card);
+  box-shadow: 0 2px 8px oklch(0.3 0.03 190 / 8%);
+}
+.identityButton,
+.newChatButton {
+  padding: 0 12px;
+  cursor: pointer;
+  font-size: 10px;
+  gap: 7px;
+}
+.identityButton svg,
+.newChatButton svg {
+  width: 14px;
+}
+.newChatButton {
+  color: oklch(0.99 0.002 175);
+  background: var(--brand-color);
+}
+.newChatButton:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+.workspace {
+  display: grid;
+  width: min(1240px, calc(100% - 48px));
+  min-height: calc(100vh - 74px);
+  margin: 0 auto;
+  grid-template-columns: 350px minmax(0, 1fr);
+  gap: 30px;
+}
+.contextPanel {
+  display: flex;
+  min-height: calc(100vh - 74px);
+  padding: 34px 5px 40px;
+  flex-direction: column;
+}
+.backLink {
+  display: flex;
+  width: fit-content;
+  align-items: center;
+  color: var(--muted-foreground);
+  font-size: 10px;
+  gap: 7px;
+}
+.backLink svg {
+  width: 14px;
+}
+.contextIntro {
+  margin-top: 75px;
+}
+.contextIntro > span {
+  color: var(--brand-color);
+  font-family: "Syne Variable", sans-serif;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+}
+.contextIntro h1 {
+  margin: 10px 0 27px;
+  font-family: "Syne Variable", "Noto Sans SC Variable", sans-serif;
+  font-size: clamp(32px, 4vw, 48px);
+  letter-spacing: -0.055em;
+  line-height: 1.05;
+}
+.contextIntro p {
+  margin: 0;
+  color: var(--muted-foreground);
+  font-size: 11px;
+}
+.contextList {
+  display: grid;
+  margin: 18px 0 0;
+  padding: 0;
+  list-style: none;
+  gap: 10px;
+}
+.contextList li {
+  display: flex;
+  align-items: center;
+  font-size: 11px;
+  gap: 8px;
+}
+.contextList svg {
+  width: 15px;
+  height: 15px;
+  padding: 3px;
+  color: oklch(0.99 0.002 175);
+  background: var(--brand-color);
+  border-radius: 50%;
+}
+.workflowMini {
+  display: grid;
+  margin-top: 42px;
+  padding: 16px;
+  background: color-mix(in oklch, var(--card) 82%, transparent);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  gap: 10px;
+}
+.workflowMini > div {
+  display: grid;
+  grid-template-columns: 28px 1fr auto;
+  align-items: center;
+  gap: 8px;
+}
+.workflowMini span {
+  color: var(--brand-color);
+  font-family: "Syne Variable", sans-serif;
+  font-size: 8px;
+  font-weight: 700;
+}
+.workflowMini p {
+  margin: 0;
+  font-size: 9px;
+}
+.workflowMini svg {
+  width: 12px;
+  color: var(--muted-foreground);
+}
+.privacyNote {
+  display: flex;
+  margin-top: auto;
+  padding: 18px 0 0;
+  color: var(--muted-foreground);
+  border-top: 1px solid var(--border);
+  gap: 10px;
+}
+.privacyNote svg {
+  width: 17px;
+  height: 17px;
+  flex: none;
+  color: var(--brand-color);
+}
+.privacyNote p {
+  margin: 0;
+  font-size: 9px;
+  line-height: 1.65;
+}
+.chatPanel {
+  display: grid;
+  height: calc(100vh - 98px);
+  min-height: 620px;
+  margin: 24px 0;
+  background: color-mix(in oklch, var(--card) 94%, transparent);
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  box-shadow: 0 18px 60px oklch(0.25 0.035 190 / 8%);
+  grid-template-rows: minmax(0, 1fr) auto;
+  overflow: hidden;
+}
+.mobileContext {
+  display: none;
+}
+.messageList {
+  overflow-y: auto;
+  padding: 42px clamp(22px, 6vw, 72px) 26px;
+  scroll-behavior: smooth;
+}
+.messageRow {
+  display: flex;
+  margin-bottom: 22px;
+  align-items: flex-start;
+  gap: 10px;
+}
+.userRow {
+  justify-content: flex-end;
+}
+.messageAvatar {
+  display: grid;
+  width: 32px;
+  height: 32px;
+  flex: none;
+  color: var(--brand-color);
+  background: color-mix(in oklch, var(--brand-color) 14%, var(--card));
+  border: 1px solid color-mix(in oklch, var(--brand-color) 25%, var(--border));
+  border-radius: 10px;
+  place-items: center;
+}
+.messageAvatar svg {
+  width: 16px;
+}
+.messageBubble {
+  max-width: min(76%, 650px);
+  padding: 15px 17px;
+  background: var(--muted);
+  border-radius: 5px 17px 17px;
+}
+.userRow .messageBubble {
+  color: oklch(0.985 0.004 175);
+  background: var(--brand-color);
+  border-radius: 17px 17px 5px;
+}
+.messageBubble > p {
+  margin: 0;
+  font-size: 12px;
+  line-height: 1.8;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+.errorBubble {
+  color: var(--danger);
+  background: oklch(0.96 0.025 28);
+  border: 1px solid oklch(0.85 0.06 28);
+}
+.typingDots {
+  display: flex;
+  min-height: 22px;
+  align-items: center;
+  gap: 5px;
+}
+.typingDots i {
+  width: 6px;
+  height: 6px;
+  background: var(--brand-color);
+  border-radius: 50%;
+  animation: typing 1.1s infinite ease-in-out;
+}
+.typingDots i:nth-child(2) {
+  animation-delay: 140ms;
+}
+.typingDots i:nth-child(3) {
+  animation-delay: 280ms;
+}
+.sources {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 12px;
+  padding-top: 10px;
+  align-items: center;
+  font-size: 8px;
+  border-top: 1px solid var(--border);
+  gap: 6px;
+}
+.sources > span {
+  color: var(--muted-foreground);
+  margin-right: 2px;
+}
+.sources a,
+.sources em {
+  display: inline-flex;
+  padding: 4px 7px;
+  align-items: center;
+  color: var(--brand-color);
+  font-style: normal;
+  background: color-mix(in oklch, var(--brand-color) 8%, var(--card));
+  border-radius: 6px;
+  gap: 4px;
+}
+.sources svg {
+  width: 9px;
+}
+.confidence {
+  display: grid;
+  margin-top: 10px;
+  align-items: center;
+  color: var(--muted-foreground);
+  font-size: 8px;
+  grid-template-columns: auto 70px auto;
+  gap: 7px;
+}
+.confidence > div {
+  overflow: hidden;
+  height: 4px;
+  background: var(--border);
+  border-radius: 4px;
+}
+.confidence i {
+  display: block;
+  height: 100%;
+  background: var(--brand-color);
+  border-radius: 4px;
+}
+.confidence strong {
+  color: var(--brand-color);
+  font-size: 8px;
+}
+.retryMessage {
+  display: flex;
+  margin-top: 11px;
+  padding: 7px 9px;
+  align-items: center;
+  color: var(--danger);
+  cursor: pointer;
+  font-size: 9px;
+  background: oklch(0.99 0.005 28);
+  border: 1px solid oklch(0.86 0.05 28);
+  border-radius: 8px;
+  gap: 5px;
+}
+.retryMessage svg {
+  width: 11px;
+}
+.suggestions {
+  display: grid;
+  max-width: 520px;
+  margin: 12px 0 30px 42px;
+  gap: 7px;
+}
+.suggestions > span {
+  display: flex;
+  margin-bottom: 2px;
+  align-items: center;
+  color: var(--muted-foreground);
+  font-family: "Syne Variable", sans-serif;
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  gap: 6px;
+}
+.suggestions > span svg {
+  width: 12px;
+  color: var(--brand-color);
+}
+.suggestions button {
+  display: flex;
+  padding: 10px 12px;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  text-align: left;
+  font-size: 10px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  transition:
+    border-color 160ms ease,
+    transform 160ms ease;
+}
+.suggestions button:hover {
+  border-color: color-mix(in oklch, var(--brand-color) 55%, var(--border));
+  transform: translateX(3px);
+}
+.suggestions button svg {
+  width: 13px;
+  flex: none;
+  color: var(--brand-color);
+}
+.resolutionCard {
+  max-width: 520px;
+  margin: 12px 0 22px 42px;
+  padding: 13px 14px;
+  background: color-mix(in oklch, var(--brand-color) 6%, var(--card));
+  border: 1px solid color-mix(in oklch, var(--brand-color) 20%, var(--border));
+  border-radius: 13px;
+}
+.resolutionCard > span {
+  display: block;
+  margin-bottom: 10px;
+  font-size: 9px;
+  font-weight: 650;
+}
+.resolutionCard > div {
+  display: flex;
+  gap: 7px;
+}
+.resolutionCard button {
+  display: flex;
+  padding: 7px 9px;
+  align-items: center;
+  cursor: pointer;
+  font-size: 9px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  gap: 5px;
+}
+.resolutionCard button:hover {
+  border-color: var(--brand-color);
+}
+.resolutionCard svg {
+  width: 12px;
+  color: var(--brand-color);
+}
+.resolutionCard p {
+  display: flex;
+  margin: 0;
+  align-items: flex-start;
+  color: var(--muted-foreground);
+  font-size: 9px;
+  line-height: 1.6;
+  gap: 7px;
+}
+.resolutionCard p svg {
+  flex: none;
+  margin-top: 1px;
+}
+.composerArea {
+  padding: 13px clamp(18px, 5vw, 54px) 15px;
+  background: color-mix(in oklch, var(--card) 96%, transparent);
+  border-top: 1px solid var(--border);
+}
+.composer {
+  display: grid;
+  padding: 8px 8px 8px 14px;
+  background: var(--background);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 8px;
+  align-items: end;
+  transition:
+    border-color 160ms ease,
+    box-shadow 160ms ease;
+}
+.composer:focus-within {
+  border-color: color-mix(in oklch, var(--brand-color) 62%, var(--border));
+  box-shadow: 0 0 0 4px color-mix(in oklch, var(--brand-color) 10%, transparent);
+}
+.composer textarea {
+  width: 100%;
+  min-height: 44px;
+  max-height: 130px;
+  padding: 7px 0;
+  resize: none;
+  background: transparent;
+  border: 0;
+  outline: 0;
+  font-size: 11px;
+  line-height: 1.55;
+}
+.composer textarea::placeholder {
+  color: var(--muted-foreground);
+}
+.composer > button {
+  display: grid;
+  width: 40px;
+  height: 40px;
+  color: oklch(0.99 0.002 175);
+  cursor: pointer;
+  background: var(--brand-color);
+  border-radius: 12px;
+  place-items: center;
+  transition:
+    transform 160ms ease,
+    opacity 160ms ease;
+}
+.composer > button:not(:disabled):hover {
+  transform: translateY(-2px);
+}
+.composer > button:disabled {
+  cursor: not-allowed;
+  opacity: 0.35;
+}
+.composer > button svg {
+  width: 16px;
+}
+.composerMeta {
+  display: flex;
+  margin-top: 7px;
+  justify-content: space-between;
+  color: var(--muted-foreground);
+  font-size: 8px;
+}
+.composerMeta span:last-child {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.composerMeta svg {
+  width: 10px;
+}
+.identityOverlay {
+  position: fixed;
+  z-index: 100;
+  inset: 0;
+  display: grid;
+  padding: 20px;
+  background: oklch(0.18 0.035 200 / 48%);
+  backdrop-filter: blur(8px);
+  place-items: center;
+}
+.identityDialog {
+  position: relative;
+  width: min(430px, 100%);
+  padding: 32px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 23px;
+  box-shadow: var(--shadow);
+  animation: dialogIn 180ms ease-out;
+}
+.dialogClose {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  display: grid;
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+  background: var(--muted);
+  border-radius: 9px;
+  place-items: center;
+}
+.dialogClose svg {
+  width: 14px;
+}
+.identityIcon {
+  display: grid;
+  width: 45px;
+  height: 45px;
+  margin-bottom: 20px;
+  color: var(--brand-color);
+  background: color-mix(in oklch, var(--brand-color) 12%, var(--card));
+  border-radius: 14px;
+  place-items: center;
+}
+.identityIcon svg {
+  width: 21px;
+}
+.identityDialog h2 {
+  margin: 0;
+  font-family: "Syne Variable", "Noto Sans SC Variable", sans-serif;
+  font-size: 24px;
+  letter-spacing: -0.04em;
+}
+.identityDialog > p,
+.signedIdentity > p {
+  color: var(--muted-foreground);
+  font-size: 10px;
+  line-height: 1.7;
+}
+.identityDialog form {
+  display: grid;
+  margin-top: 20px;
+  gap: 13px;
+}
+.identityDialog label {
+  display: grid;
+  color: var(--muted-foreground);
+  font-size: 9px;
+  font-weight: 650;
+  gap: 6px;
+}
+.identityDialog input {
+  width: 100%;
+  height: 42px;
+  padding: 0 12px;
+  background: var(--background);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  outline: 0;
+  font-size: 11px;
+}
+.identityDialog input:focus {
+  border-color: var(--brand-color);
+  box-shadow: 0 0 0 3px color-mix(in oklch, var(--brand-color) 9%, transparent);
+}
+.submitIdentity {
+  display: flex;
+  min-height: 43px;
+  margin-top: 4px;
+  align-items: center;
+  justify-content: center;
+  color: oklch(0.99 0.002 175);
+  cursor: pointer;
+  font-size: 11px;
+  font-weight: 650;
+  background: var(--brand-color);
+  border-radius: 11px;
+  gap: 7px;
+}
+.submitIdentity:disabled {
+  opacity: 0.55;
+}
+.submitIdentity svg {
+  width: 14px;
+}
+.switchIdentity {
+  cursor: pointer;
+  color: var(--brand-color);
+  font-size: 9px;
+  background: transparent;
+}
+.guestIdentity {
+  display: flex;
+  width: 100%;
+  min-height: 42px;
+  margin-top: 11px;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 10px;
+  background: var(--muted);
+  border-radius: 11px;
+  gap: 7px;
+}
+.guestIdentity svg {
+  width: 14px;
+}
+.identityError {
+  color: var(--danger);
+  font-size: 9px;
+  line-height: 1.5;
+}
+.signedIdentity button {
+  min-height: 40px;
+  margin-top: 12px;
+  padding: 0 15px;
+  color: var(--danger);
+  cursor: pointer;
+  background: oklch(0.96 0.025 28);
+  border-radius: 10px;
+}
+.statePage {
+  display: grid;
+  min-height: 100vh;
+  padding: 24px;
+  text-align: center;
+  background:
+    radial-gradient(
+      circle at 50% 45%,
+      oklch(0.83 0.08 175 / 22%),
+      transparent 20rem
+    ),
+    var(--background);
+  place-items: center;
+  align-content: center;
+  gap: 13px;
+}
+.loadingOrb {
+  display: grid;
+  width: 66px;
+  height: 66px;
+  margin-bottom: 10px;
+  color: oklch(0.98 0.005 175);
+  background: var(--primary);
+  border-radius: 21px;
+  place-items: center;
+  box-shadow: 0 18px 40px oklch(0.42 0.1 177 / 22%);
+  animation: pulse 1.8s infinite ease-in-out;
+}
+.loadingOrb svg {
+  width: 30px;
+}
+.statePage > strong {
+  font-family: "Syne Variable", "Noto Sans SC Variable", sans-serif;
+  font-size: 16px;
+}
+.loadingLine {
+  overflow: hidden;
+  width: 170px;
+  height: 3px;
+  background: var(--border);
+  border-radius: 3px;
+}
+.loadingLine span {
+  display: block;
+  width: 45%;
+  height: 100%;
+  background: var(--primary);
+  animation: loading 1.2s infinite ease-in-out;
+}
+.errorOrb {
+  color: var(--danger);
+  background: oklch(0.95 0.035 28);
+  box-shadow: none;
+  animation: none;
+}
+.statePage h1 {
+  margin: 6px 0 0;
+  font-family: "Syne Variable", "Noto Sans SC Variable", sans-serif;
+  font-size: 28px;
+  letter-spacing: -0.045em;
+}
+.statePage p {
+  max-width: 450px;
+  margin: 0;
+  color: var(--muted-foreground);
+  font-size: 11px;
+  line-height: 1.7;
+}
+.stateActions {
+  display: flex;
+  margin-top: 12px;
+  gap: 9px;
+}
+.stateActions button,
+.stateActions a {
+  display: flex;
+  min-height: 42px;
+  padding: 0 14px;
+  align-items: center;
+  cursor: pointer;
+  font-size: 10px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 11px;
+  gap: 7px;
+}
+.stateActions button {
+  color: oklch(0.99 0.002 175);
+  background: var(--primary);
+  border-color: var(--primary);
+}
+.stateActions svg {
+  width: 14px;
+}
+.spin {
+  animation: spin 900ms infinite linear;
+}
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes typing {
+  0%,
+  60%,
+  100% {
+    opacity: 0.35;
+    transform: translateY(0);
+  }
+  30% {
+    opacity: 1;
+    transform: translateY(-3px);
+  }
+}
+@keyframes loading {
+  0% {
+    transform: translateX(-110%);
+  }
+  100% {
+    transform: translateX(330%);
+  }
+}
+@keyframes pulse {
+  0%,
+  100% {
+    transform: translateY(0) rotate(-3deg);
+  }
+  50% {
+    transform: translateY(-5px) rotate(2deg);
+  }
+}
+@keyframes dialogIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+@media (width <= 920px) {
+  .workspace {
+    width: 100%;
+    grid-template-columns: 1fr;
+  }
+  .contextPanel {
+    display: none;
+  }
+  .chatPanel {
+    height: calc(100vh - 74px);
+    min-height: 0;
+    margin: 0;
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+  }
+  .mobileContext {
+    display: flex;
+    padding: 10px 20px;
+    align-items: center;
+    justify-content: space-between;
+    background: color-mix(in oklch, var(--brand-color) 6%, var(--card));
+    border-bottom: 1px solid var(--border);
+    gap: 20px;
+  }
+  .mobileContext span {
+    display: flex;
+    flex: none;
+    align-items: center;
+    color: var(--brand-color);
+    font-size: 9px;
+    font-weight: 650;
+    gap: 5px;
+  }
+  .mobileContext svg {
+    width: 11px;
+  }
+  .mobileContext small {
+    overflow: hidden;
+    color: var(--muted-foreground);
+    font-size: 8px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .chatPanel {
+    grid-template-rows: auto minmax(0, 1fr) auto;
+  }
+}
+@media (width <= 640px) {
+  .topbar {
+    height: 64px;
+    padding: 0 12px;
+  }
+  .appLogo {
+    width: 36px;
+    height: 36px;
+  }
+  .appBrand strong {
+    max-width: 112px;
+    font-size: 12px;
+  }
+  .localeSwitch > svg,
+  .identityButton span,
+  .newChatButton span {
+    display: none;
+  }
+  .identityButton,
+  .newChatButton {
+    width: 35px;
+    padding: 0;
+    justify-content: center;
+  }
+  .localeSwitch {
+    padding-left: 5px;
+  }
+  .workspace {
+    min-height: calc(100vh - 64px);
+  }
+  .chatPanel {
+    height: calc(100dvh - 64px);
+  }
+  .mobileContext {
+    padding-inline: 14px;
+  }
+  .messageList {
+    padding: 27px 14px 20px;
+  }
+  .messageBubble {
+    max-width: 86%;
+  }
+  .suggestions,
+  .resolutionCard {
+    margin-left: 42px;
+  }
+  .composerArea {
+    padding: 10px 11px 12px;
+  }
+  .composerMeta span:first-child {
+    display: none;
+  }
+  .composerMeta {
+    justify-content: flex-end;
+  }
+  .identityDialog {
+    padding: 27px 22px;
+  }
+}
