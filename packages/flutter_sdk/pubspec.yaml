@@ -1,6 +1,6 @@
 name: feedback_agent_flutter
 description: Embeddable Flutter client and chat UI for the Feedback Agent platform.
-version: 0.0.1
+version: 0.1.0
 
 environment:
   sdk: ^3.12.2
@@ -9,6 +9,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_secure_storage: ^10.3.1
   http: ^1.5.0
 
 dev_dependencies:

@@ -11,10 +11,16 @@ async function bootstrap() {
   app.enableShutdownHooks();
   app.use(helmet({ crossOriginResourcePolicy: { policy: 'cross-origin' } }));
   app.use(cookieParser());
+  const additionalOrigins = config
+    .get<string>('CORS_ORIGINS', '')
+    .split(',')
+    .map((origin) => origin.trim())
+    .filter(Boolean);
   app.enableCors({
     origin: [
       config.get<string>('WEB_URL', 'http://localhost:3000'),
       config.get<string>('ADMIN_URL', 'http://localhost:8848'),
+      ...additionalOrigins,
     ],
     credentials: true,
     exposedHeaders: ['Content-Type', 'X-Request-Id'],
