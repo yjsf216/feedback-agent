@@ -64,7 +64,11 @@ body {
   min-height: calc(100vh - 112px);
   padding: 26px;
   background:
-    radial-gradient(circle at 96% 2%, oklch(0.86 0.08 174 / 20%), transparent 27rem),
+    radial-gradient(
+      circle at 96% 2%,
+      oklch(0.86 0.08 174 / 20%),
+      transparent 27rem
+    ),
     var(--fa-background);
 }
 

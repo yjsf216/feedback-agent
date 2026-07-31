@@ -1,7 +1,6 @@
-import { PrismaClient } from "@prisma/client";
+import { PrismaClient } from "../generated/client";
 
 declare global {
-  // eslint-disable-next-line no-var
   var feedbackAgentPrisma: PrismaClient | undefined;
 }
 
@@ -15,4 +14,4 @@ if (process.env.NODE_ENV !== "production") {
   globalThis.feedbackAgentPrisma = prisma;
 }
 
-export * from "@prisma/client";
+export * from "../generated/client";

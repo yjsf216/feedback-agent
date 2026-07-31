@@ -4,7 +4,7 @@
   "private": true,
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
-  "files": ["dist", "prisma"],
+  "files": ["dist", "generated", "prisma"],
   "scripts": {
     "build": "pnpm generate && tsc -p tsconfig.build.json",
     "generate": "prisma generate",
@@ -14,7 +14,7 @@
     "studio": "prisma studio",
     "typecheck": "tsc --noEmit",
     "lint:check": "eslint \"{src,prisma}/**/*.ts\" --max-warnings 0",
-    "format:check": "prettier --check \"{src,prisma}/**/*.ts\" \"prisma/schema.prisma\"",
+    "format:check": "prettier --check \"{src,prisma}/**/*.ts\" && dotenv -e ../../.env.example -- prisma validate",
     "test": "node --test"
   },
   "dependencies": {

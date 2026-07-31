@@ -2,6 +2,7 @@
 .env
 .env.*
 !.env.example
+!.env.production.example
 node_modules/
 .pnpm-store/
 dist/
@@ -30,5 +31,6 @@ infra/data/
 
 # Generated API clients
 packages/contracts/generated/
+packages/database/generated/
 packages/flutter_sdk/lib/src/generated/
 packages/flutter_sdk/pubspec.lock

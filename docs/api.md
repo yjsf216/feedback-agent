@@ -2,6 +2,8 @@
 
 本地默认地址：`http://localhost:4100`，Swagger：`/docs`。公开接口与用户接口不接受管理员的 `X-App-Id` 范围替换，所有跨应用访问都由服务端校验。
 
+Flutter Web 或其他独立前端域名必须加入逗号分隔的 `CORS_ORIGINS`。生产环境使用精确 Origin，不使用 `*`。
+
 ## 用户认证
 
 - `POST /v1/auth/guest`：传入 `appId` 与设备持久化的 `guestId`。
@@ -37,6 +39,8 @@ message.completed | error
 ```
 
 客户端应使用 `clientMessageId` 做安全重试。服务端以 `(conversationId, clientMessageId)` 保证用户消息幂等。
+
+Flutter 应优先使用仓库内的 `feedback_agent_flutter` SDK。自定义客户端必须正确处理跨网络分块的 SSE、401 后的 Refresh Token 轮换，以及 `error` 事件。
 
 ## 管理端
 
