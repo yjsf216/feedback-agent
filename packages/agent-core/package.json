@@ -2,6 +2,8 @@
   "name": "@feedback-agent/agent-core",
   "version": "0.1.0",
   "private": true,
+  "license": "Apache-2.0",
+  "description": "Deterministic LangGraph workflow state and nodes for Feedback Agent.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "files": ["dist"],

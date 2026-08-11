@@ -1,0 +1,45 @@
+name: Feature request
+description: Propose a focused product or integration improvement
+title: "[Feature]: "
+labels:
+  - enhancement
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem
+      description: What user or product-team problem are you trying to solve?
+    validations:
+      required: true
+  - type: textarea
+    id: workflow
+    attributes:
+      label: Desired workflow
+      description: Describe the before, during, completed, and interrupted states.
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+  - type: dropdown
+    id: surface
+    attributes:
+      label: Primary surface
+      options:
+        - API / LangGraph
+        - Worker / queues
+        - Public Web
+        - Admin
+        - Flutter SDK
+        - Deployment
+        - Documentation
+    validations:
+      required: true
+  - type: checkboxes
+    id: scope
+    attributes:
+      label: Scope check
+      options:
+        - label: This request preserves server-side secret handling and app isolation.
+          required: true

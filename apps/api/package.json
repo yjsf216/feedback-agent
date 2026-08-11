@@ -1,10 +1,10 @@
 {
   "name": "@feedback-agent/api",
-  "version": "0.0.1",
-  "description": "",
-  "author": "",
+  "version": "0.1.0",
+  "description": "NestJS API and LangGraph orchestration service for Feedback Agent.",
+  "author": "Feedback Agent contributors",
   "private": true,
-  "license": "UNLICENSED",
+  "license": "Apache-2.0",
   "scripts": {
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",

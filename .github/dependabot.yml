@@ -1,0 +1,26 @@
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: monthly
+    groups:
+      node-dependencies:
+        patterns:
+          - "*"
+  - package-ecosystem: pub
+    directory: /packages/flutter_sdk
+    schedule:
+      interval: monthly
+    groups:
+      flutter-dependencies:
+        patterns:
+          - "*"
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: monthly
+    groups:
+      actions:
+        patterns:
+          - "*"

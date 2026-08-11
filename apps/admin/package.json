@@ -1,8 +1,9 @@
 {
   "name": "@feedback-agent/admin",
-  "version": "6.2.0",
+  "version": "0.1.0",
   "private": true,
   "type": "module",
+  "description": "Feedback Agent administration console, derived from pure-admin-thin.",
   "scripts": {
     "dev": "NODE_OPTIONS=--max-old-space-size=4096 vite",
     "serve": "pnpm dev",
@@ -23,6 +24,9 @@
     "preinstall": "npx only-allow pnpm"
   },
   "keywords": [
+    "feedback-agent",
+    "customer-support",
+    "voice-of-customer",
     "pure-admin-thin",
     "vue-pure-admin",
     "element-plus",
@@ -34,20 +38,16 @@
     "vite",
     "esm"
   ],
-  "homepage": "https://github.com/pure-admin/pure-admin-thin",
+  "homepage": "https://github.com/yjsf216/feedback-agent/tree/main/apps/admin",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/pure-admin/pure-admin-thin.git"
+    "url": "https://github.com/yjsf216/feedback-agent.git"
   },
   "bugs": {
-    "url": "https://github.com/pure-admin/vue-pure-admin/issues"
+    "url": "https://github.com/yjsf216/feedback-agent/issues"
   },
   "license": "MIT",
-  "author": {
-    "name": "xiaoxian521",
-    "email": "pureadmin@163.com",
-    "url": "https://github.com/xiaoxian521"
-  },
+  "author": "Feedback Agent contributors; based on pure-admin-thin by pure-admin",
   "dependencies": {
     "@feedback-agent/contracts": "workspace:*",
     "@fontsource-variable/manrope": "^5.3.0",

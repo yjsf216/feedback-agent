@@ -2,7 +2,17 @@
   "name": "feedback-agent",
   "version": "0.1.0",
   "private": true,
-  "description": "Multi-app AI support and feedback intelligence platform.",
+  "description": "Open-source AI customer support and voice-of-customer platform.",
+  "license": "Apache-2.0",
+  "author": "Feedback Agent contributors",
+  "homepage": "https://github.com/yjsf216/feedback-agent#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yjsf216/feedback-agent.git"
+  },
+  "bugs": {
+    "url": "https://github.com/yjsf216/feedback-agent/issues"
+  },
   "packageManager": "pnpm@11.9.0",
   "engines": {
     "node": ">=22.13.0 <27",

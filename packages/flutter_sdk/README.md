@@ -10,12 +10,24 @@ has users must perform the signed token exchange on its own trusted backend.
 
 ## Add the package
 
+Until a registry release is ready, use the Git repository directly:
+
+```yaml
+dependencies:
+  feedback_agent_flutter:
+    git:
+      url: https://github.com/yjsf216/feedback-agent.git
+      path: packages/flutter_sdk
+```
+
+For a local checkout next to your host Flutter app, use a path dependency:
+
 During monorepo development, use a path dependency:
 
 ```yaml
 dependencies:
   feedback_agent_flutter:
-    path: ../feedback_agent/packages/flutter_sdk
+    path: ../feedback-agent/packages/flutter_sdk
 ```
 
 Create one client and controller for the lifetime of the host screen:

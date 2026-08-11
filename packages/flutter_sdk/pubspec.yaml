@@ -1,6 +1,14 @@
 name: feedback_agent_flutter
 description: Embeddable Flutter client and chat UI for the Feedback Agent platform.
 version: 0.1.0
+publish_to: none
+homepage: https://github.com/yjsf216/feedback-agent
+repository: https://github.com/yjsf216/feedback-agent/tree/main/packages/flutter_sdk
+issue_tracker: https://github.com/yjsf216/feedback-agent/issues
+topics:
+  - ai
+  - customer-support
+  - feedback
 
 environment:
   sdk: ^3.12.2

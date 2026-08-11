@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Security vulnerability
+    url: https://github.com/yjsf216/feedback-agent/security/advisories/new
+    about: Report authentication, isolation, credential, injection, or data exposure issues privately.
+  - name: Usage question or idea
+    url: https://github.com/yjsf216/feedback-agent/discussions
+    about: Ask integration questions or share a product use case.
