@@ -18,8 +18,24 @@ packages/database/generated
 .env.*
 !.env.example
 !apps/admin/.env.production
+.envrc
+.npmrc
+.dev.vars
+secrets
+credentials*.json
+service-account*.json
+*.pem
+*.key
+*.p12
+*.pfx
+*.jks
+*.keystore
 
 .local
 infra/data
+backups
+*.dump
+*.bak
+*.sqlite*
 packages/flutter_sdk
 *.log

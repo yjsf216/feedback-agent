@@ -3,6 +3,19 @@
 .env.*
 !.env.example
 !.env.production.example
+.envrc
+.npmrc
+.dev.vars
+secrets/
+credentials*.json
+service-account*.json
+*.pem
+*.key
+*.p12
+*.pfx
+*.jks
+*.keystore
+*.mobileprovision
 node_modules/
 .pnpm-store/
 dist/
@@ -28,6 +41,12 @@ macos/Pods/
 # Local runtime data
 .local/
 infra/data/
+backups/
+*.dump
+*.bak
+*.sqlite
+*.sqlite3
+terraform.tfstate*
 
 # Generated API clients
 packages/contracts/generated/

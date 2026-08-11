@@ -70,7 +70,7 @@ services:
       MINIO_ROOT_USER: ${MINIO_ROOT_USER:?MINIO_ROOT_USER is required}
       MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD:?MINIO_ROOT_PASSWORD is required}
     ports:
-      - "${MINIO_CONSOLE_PORT:-9001}:9001"
+      - "127.0.0.1:${MINIO_CONSOLE_PORT:-9001}:9001"
     volumes:
       - minio_data:/data
     healthcheck:
@@ -123,7 +123,7 @@ services:
       ADMIN_URL: ${PUBLIC_ADMIN_URL:-http://localhost:8848}
       CORS_ORIGINS: ${CORS_ORIGINS:-}
     ports:
-      - "${API_PORT:-4100}:4100"
+      - "127.0.0.1:${API_PORT:-4100}:4100"
     depends_on:
       migrate:
         condition: service_completed_successfully
@@ -169,7 +169,7 @@ services:
         NEXT_PUBLIC_DEMO_APP_SLUG: ${DEMO_APP_SLUG:-demo}
     restart: unless-stopped
     ports:
-      - "${WEB_PORT:-3000}:3000"
+      - "127.0.0.1:${WEB_PORT:-3000}:3000"
     depends_on:
       api:
         condition: service_healthy
@@ -182,7 +182,7 @@ services:
         VITE_API_BASE_URL: /api
     restart: unless-stopped
     ports:
-      - "${ADMIN_PORT:-8848}:80"
+      - "127.0.0.1:${ADMIN_PORT:-8848}:80"
     depends_on:
       api:
         condition: service_healthy
