@@ -33,6 +33,7 @@
     "types": [
       "node",
       "vite/client",
+      "vite-svg-loader",
       "element-plus/global",
       "@pureadmin/table/volar",
       "unplugin-icons/types/vue",
@@ -44,6 +45,7 @@
     "src/**/*.ts",
     "src/**/*.tsx",
     "src/**/*.vue",
+    "build/**/*.ts",
     "types/*.d.ts",
     "vite.config.ts"
   ],

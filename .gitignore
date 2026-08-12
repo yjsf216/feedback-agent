@@ -34,6 +34,8 @@ coverage/
 .flutter-plugins-dependencies
 .packages
 build/
+!apps/admin/build/
+!apps/admin/build/**
 ios/Pods/
 ios/.symlinks/
 macos/Pods/
