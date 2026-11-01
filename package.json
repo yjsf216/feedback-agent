@@ -47,8 +47,8 @@
     "sdk:test": "cd packages/flutter_sdk && fvm flutter test"
   },
   "devDependencies": {
-    "dotenv-cli": "^11.0.0",
-    "eslint": "^9.39.5",
-    "typescript-eslint": "^8.65.0"
+    "dotenv-cli": "^11.1.0",
+    "eslint": "^10.13.0",
+    "typescript-eslint": "^8.72.1"
   }
 }
